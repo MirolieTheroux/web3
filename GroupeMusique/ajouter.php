@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 
-<body class="container">
+<body class="container mt-5">
 
     <?php
     //On crée les variables du formulaire vide
@@ -19,8 +19,8 @@
     $image = "";
 
     //On crée les variables d'erreurs vides
-    $nomUsagerErreur = "";
-    $nb_personnesErreur = "";
+    $nomErreur = "";
+    $nbPersonnesErreur = "";
     $genreErreur = "";
     $imageErreur = "";
 
@@ -30,7 +30,7 @@
     //Variables connexion
     $servername = "localhost";
     $username = "root";
-    $password = "root";
+    $password = "";
     $dbname = "groupe_de_musique";
     //Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -42,46 +42,74 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($_POST['nom'])) {
-            $nomUsagerErreur = "Le nom est requis";
+            $nomErreur = "Le nom est requis";
             $erreur = true;
-        } elseif (empty($_POST['nbPersonnes'])) {
-            $avatarErreur = "Le lien pour un avatar est requis";
+        }
+        if (empty($_POST['nbPersonnes'])) {
+            $nbPersonnesErreur = "Le nombre de personnes est requis";
             $erreur = true;
-        } elseif (empty($_POST['genre'])) {
+        } elseif ($nb_personnes <= 1) {
+            $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
+        }
+        if (empty($_POST['genre'])) {
             $genreErreur = "Le genre est requis";
             $erreur = true;
-        } elseif (empty($_POST['image'])) {
-            $ddbErreur = "La date de naissance est requise";
+        }
+        if (empty($_POST['image'])) {
+            $imageErreur = "Le lien pour un avatar est requis";
             $erreur = true;
         } else {
             $nom = test_input($_POST["nom"]);
-            $nb_personnes= test_input($_POST["nbPersonnes"]);
+            $nb_personnes = test_input($_POST["nbPersonnes"]);
             $genre = test_input($_POST["genre"]);
             $image = test_input($_POST["image"]);
+            $sql = "INSERT INTO groupe (nom,nb_personnes, genre, img)
+        VALUES ('" . $_POST['nom'] . "', '" . $_POST['nbPersonnes'] . "', '" . $_POST['genre'] . "', '" . $_POST['image'] . "')";
+
+            if (mysqli_query($conn, $sql)) {
+                echo "Enregistrement réussi";
+            } else {
+                echo "Error:" . $sql . "<br>" . mysqli_error($conn);
+            }
+            mysqli_close($conn);
         }
     }
-    ?>
-    <?php
+
+
     if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
     ?>
         <form action="" method="POST">
-            <label for="">Nom du groupe :</label>
-            <input type="text" class="form-control" name="nom">
+            <div>
+                <label for="">Nom du groupe :</label>
+                <input type="text" class="form-control" name="nom">
+                <span class="text-danger"><?php echo $nomErreur; ?></span>
+            </div>
 
-            <label for="">Nombre de personnes :</label>
-            <input type="number" name="nbPersonnes" id="" class="form-control">
+            <div>
+                <label for="">Nombre de personnes :</label>
+                <input type="number" name="nbPersonnes" class="form-control">
+                <span class="text-danger"><?php echo $nbPersonnesErreur; ?></span>
+            </div>
 
-            <label for="">Genre : </label>
-            <input type="text" class="form-control" name="genre">
+            <div>
+                <label for="">Genre : </label>
+                <input type="text" class="form-control" name="genre">
+                <span class="text-danger"><?php echo $genreErreur; ?></span>
 
-            <label for="">Image:</label>
-            <input type="text" class="form-control" name="image">
+            </div>
 
+            <div>
+
+                <label for="">Image:</label>
+                <input type="text" class="form-control" name="image">
+                <span class="text-danger"><?php echo $imageErreur; ?></span>
+            </div>
+
+            <div class="col-12 mt-5">
+                <input class="btn btn-primary" type="submit" value="Créer votre compte">
+            </div>
         </form>
     <?php
-        $sql = "INSERT INTO groupe (nom,nb_personnes, genre, img)
-    VALUES ('" . $_POST['nom'] . "', '" . $_POST['nbPersonnes'] . "', '" . $_POST['genre'] . "', '" . $_POST['image'] . "')";
-        echo $sql;
     }
     function test_input($data)
     {
@@ -91,12 +119,7 @@
         return $data;
     }
 
-    if (mysqli_query($conn, $sql)) {
-        echo "Enregistrement réussi";
-    } else {
-        echo "Error:" . $sql . "<br>" . mysqli_error($conn);
-    }
-    mysqli_close($conn);
+
     ?>
 
 </body>

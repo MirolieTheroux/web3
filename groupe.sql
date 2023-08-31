@@ -26,43 +26,43 @@ SET time_zone = "+00:00";
 -- Structure de la table `groupe`
 --
 
-CREATE TABLE `groupe` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(255) NOT NULL,
-  `nb_personnes` int(11) NOT NULL,
-  `genre` varchar(50) NOT NULL,
-  `img` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CREATE TABLE `groupe` (
+    `id` int(11) NOT NULL,
+    `nom` varchar(255) NOT NULL,
+    `nb_personnes` int(11) NOT NULL,
+    `genre` varchar(50) NOT NULL,
+    `img` varchar(500) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Contenu de la table `groupe`
---
+  --
+  -- Contenu de la table `groupe`
+  --
 
-INSERT INTO `groupe` (`id`, `nom`, `nb_personnes`, `genre`, `img`) VALUES
-(1, 'Twenty One Pilots', 2, 'Rock Alternatif', 'https://media.nrj.fr/1900x1200/2016/09/twenty-one-pilots_778.jpg'),
-(2, 'boygenius', 3, 'Indie', 'https://www.rollingstone.com/wp-content/uploads/2023/01/boygeniusfinal4-copy_127.jpg?w=1024'),
-(3, 'AJR', 3, 'Indie pop', 'https://i.scdn.co/image/ab6761610000e5ebd0f8fb5691ea660889d10eb1'),
-(4, 'Bon Iver', 6, 'Rock Folk', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Bon_Iver%40Stockholm.jpg/1280px-Bon_Iver%40Stockholm.jpg');
+  INSERT INTO `groupe` (`id`, `nom`, `nb_personnes`, `genre`, `img`) VALUES
+  (1, 'Twenty One Pilots', 2, 'Rock Alternatif', 'https://media.nrj.fr/1900x1200/2016/09/twenty-one-pilots_778.jpg'),
+  (2, 'boygenius', 3, 'Indie', 'https://www.rollingstone.com/wp-content/uploads/2023/01/boygeniusfinal4-copy_127.jpg?w=1024'),
+  (3, 'AJR', 3, 'Indie pop', 'https://i.scdn.co/image/ab6761610000e5ebd0f8fb5691ea660889d10eb1'),
+  (4, 'Bon Iver', 6, 'Rock Folk', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Bon_Iver%40Stockholm.jpg/1280px-Bon_Iver%40Stockholm.jpg');
 
---
--- Index pour les tables exportées
---
+  --
+  -- Index pour les tables exportées
+  --
 
---
--- Index pour la table `groupe`
---
-ALTER TABLE `groupe`
-  ADD PRIMARY KEY (`id`);
+  --
+  -- Index pour la table `groupe`
+  --
+  ALTER TABLE `groupe`
+    ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT pour les tables exportées
---
+  --
+  -- AUTO_INCREMENT pour les tables exportées
+  --
 
---
--- AUTO_INCREMENT pour la table `groupe`
---
-ALTER TABLE `groupe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  --
+  -- AUTO_INCREMENT pour la table `groupe`
+  --
+  ALTER TABLE `groupe`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+  /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+  /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
