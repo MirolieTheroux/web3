@@ -38,6 +38,7 @@
     //Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     //Check connection
+
     if (!$conn) {
         die("Connectionfailed:" . mysqli_connect_error());
     }
@@ -45,13 +46,21 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $sql = "SELECT * from groupe WHERE id=$id";
-        
-
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        $nom =  $row['nom'];
+        $nbPersonnes = $row['nb_personnes'];
+        $genre = $row['genre'];
+        $image = $row['img'];
     } elseif (isset($_POST['id'])) {
         $id = $_GET['id'];
-
-
-
+        $sql = "SELECT * from groupe WHERE id=$id";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        $nom = $row['nom'];
+        $nbPersonnes = $row['nb_personnes'];
+        $genre = $row['genre'];
+        $image = $row['img'];
     } else {
         echo "ERREUR";
     }
@@ -84,19 +93,20 @@
         } else {
             $image = test_input($_POST["image"]);
         }
-        $sql = "INSERT INTO groupe (nom,nb_personnes, genre, img)
-        VALUES ('" . $_POST['nom'] . "', '" . $_POST['nbPersonnes'] . "', '" . $_POST['genre'] . "', '" . $_POST['image'] . "')";
+        $sql = "UPDATE groupe set nom='$nom' WHERE id=$id";
+        echo $sql;
 
-        if ($conn-> query($sql) === TRUE) {
+        if ($conn->query($sql) === TRUE) {
             echo "Modification réussie";
         } else {
-            echo "Error:" . $sql . "<br>" . $conn -> error;
+            echo "Error:" . $sql . "<br>" . $conn->error;
         }
     }
     mysqli_close($conn);
 
 
     if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
+
     ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div>
