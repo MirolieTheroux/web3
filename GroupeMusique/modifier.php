@@ -33,7 +33,7 @@
     //Variables connexion
     $servername = "localhost";
     $username = "root";
-    $password = "root";
+    $password = "";
     $dbname = "groupe_de_musique";
     //Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -98,6 +98,7 @@
 
         if ($conn->query($sql) === TRUE) {
             echo "Modification réussie";
+            header("Location: index.php");
         } else {
             echo "Error:" . $sql . "<br>" . $conn->error;
         }
