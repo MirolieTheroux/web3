@@ -78,6 +78,22 @@
             if (mysqli_query($conn, $sql)) {
                 echo "Enregistrement réussi";
                 header("Location: ajouter.php");
+    ?>
+                <!-- TOASTS -->
+                <!-- Contenu du toast groupe supprimé -->
+                <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+                    <div id="toast" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <p class="me-auto"> Confirmation</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            <p class="m-0">Le groupe a bien été ajouté</p>
+                        </div>
+                    </div>
+                </article> <!-- Fin toast -->
+                </div>
+        <?php
             } else {
                 echo "Error:" . $sql . "<br>" . mysqli_error($conn);
             }
@@ -88,7 +104,7 @@
 
 
     if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
-    ?>
+        ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div>
                 <label for="">Nom du groupe :</label>
@@ -118,12 +134,13 @@
 
 
             <div class="col-6 mt-5">
-                <input class="btn btn-primary" type="submit" value="Ajouter le groupe">
+                <input id="ajouter" class="btn btn-primary" type="submit" value="Ajouter le groupe">
             </div>
         </form>
         <div class="col-6 mt-5">
             <a class="btn btn-success" href="index.php">Retour</a>
         </div>
+
     <?php
     }
     function test_input($data)
