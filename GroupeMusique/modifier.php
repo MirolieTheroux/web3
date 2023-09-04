@@ -24,9 +24,6 @@
     $genreErreur = "";
     $imageErreur = "";
 
-    //Autres variables pour gérer les erreurs
-    $regexLettres = "^[a-zA-z]+ ( [\s] [a-zA-Z]+)^$";
-
     //La variable qui permet de savoir s'il y a au moins une erreur dans le formulaire
     $erreur = false;
 
@@ -53,7 +50,7 @@
         $genre = $row['genre'];
         $image = $row['img'];
     } elseif (isset($_POST['id'])) {
-        $id = $_GET['id'];
+        $id = $_POST['id'];
         $sql = "SELECT * from groupe WHERE id=$id";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
@@ -75,7 +72,7 @@
         if (empty($_POST['nbPersonnes'])) {
             $nbPersonnesErreur = "Le nombre de personnes est requis";
             $erreur = true;
-        } elseif ($nbPersonnes <= 1 || preg_match('/' . $regexLettres . '/', $_POST['nbPersonnes'])) {
+        } elseif (!is_numeric($_POST['nbPersonnes']) || $_POST['nbPersonnes'] <= 1) {
             $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
         } else {
             $nbPersonnes = test_input($_POST["nbPersonnes"]);
@@ -93,23 +90,28 @@
         } else {
             $image = test_input($_POST["image"]);
         }
-        $sql = "UPDATE groupe set nom='$nom' WHERE id=$id";
-        echo $sql;
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Modification réussie";
-            header("Location: index.php");
-        } else {
-            echo "Error:" . $sql . "<br>" . $conn->error;
+        if (!$erreur) {
+            $sql = "UPDATE groupe SET nom='$nom', nb_personnes='$nbPersonnes', genre='$genre', img='$image' WHERE id=$id";
+
+            if ($conn->query($sql) === TRUE) {
+                
+                header("Location: index.php");
+                echo "Modification réussie";
+            } else {
+                echo $id . $sql . "<br>" . $conn->error;
+            }
         }
+        mysqli_close($conn);
     }
-    mysqli_close($conn);
+
 
 
     if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
 
     ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div>
                 <label for="">Nom du groupe :</label>
                 <input type="text" class="form-control" name="nom" value="<?php echo $nom; ?>">

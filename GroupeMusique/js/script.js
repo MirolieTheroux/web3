@@ -1,27 +1,39 @@
 'use strict';
 /* global bootstrap */
 
-
-document.getElementById('tSupprimer').addEventListener('submit', function(e) {
-    creerToast(e);
+document.addEventListener('DOMContentLoaded', function () {
+    /**
+     * 
+     */
+    function creerToastSupprimer() {
+        let toast = new bootstrap.Toast(document.getElementById('toast-S'));
+        toast.show();
+    }
+    /**
+     * 
+     */
+    function creerToastModifier() {
+        let toast = new bootstrap.Toast(document.getElementById('toast-M'));
+        toast.show();
+    }
+if()
+ 
 });
 
-document.getElementById('ajouter').addEventListener('submit', function(e) {
-    creerToast(e);
-});
 
-/**
- * Créer et affiche un toast pendant 3 secondes lors de l'ajout d'un jeu dans le panier.
- * @param {Object} e événement
- */
-function creerToast(e) {
-    e.preventDefault();
-    let optionsToast = {
-        delay: 3000,
-        animation: true,
-        autohide: true
-    };
+if (document.getElementById('ajouter')) {
+    document.getElementById('ajouter').addEventListener('submit', function (e) {
+        e.preventDefault();
+        /**
+         * 
+         */
+        function creerToastAjouter() {
 
-    // Création du Toast.
-    new bootstrap.Toast(document.getElementById('toast'), optionsToast).show();
+            let toast = new bootstrap.Toast(document.getElementById('toast-A'));
+            toast.show();
+        }
+
+        creerToastAjouter();
+    });
+
 }

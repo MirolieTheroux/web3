@@ -74,13 +74,13 @@
                     ?>
                 </tbody>
             </table>
-           
+
             <a class="btn btn-success" href="ajouter.php">Ajouter un groupe</a>
 
             <!-- TOASTS -->
             <!-- Contenu du toast groupe supprimé -->
             <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
-                <div id="toast" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="toast-S" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
                         <p class="me-auto"> Confirmation</p>
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -90,7 +90,22 @@
                     </div>
                 </div>
             </article> <!-- Fin toast -->
-            </div>
+
+         
+
+            <!-- TOASTS -->
+            <!-- Contenu du toast groupe modifié -->
+            <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+                <div id="toast-M" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <p class="me-auto"> Confirmation</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <p class="m-0">Le groupe a bien été modifié</p>
+                    </div>
+                </div>
+            </article> <!-- Fin toast -->
         <?php
         } else {
             echo "0 results";

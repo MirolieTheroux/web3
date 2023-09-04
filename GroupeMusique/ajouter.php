@@ -82,7 +82,7 @@
                 <!-- TOASTS -->
                 <!-- Contenu du toast groupe supprimé -->
                 <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
-                    <div id="toast" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div id="toast-A" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="toast-header">
                             <p class="me-auto"> Confirmation</p>
                             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
