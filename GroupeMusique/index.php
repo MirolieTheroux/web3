@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/styles.css">
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
     <!-- Script pour Bootstrap 5 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
@@ -171,27 +172,7 @@
 
         $conn->close();
         ?>
-
-
-    </main>
-
-    <?php
-    // Emplacement de votre fichier SCSS et CSS
-    $scssFile = 'css/styles.scss';
-    $cssFile = 'css/styles.css';
-
-    // Commande pour compiler SCSS en CSS
-    $command = "sass $scssFile $cssFile";
-
-    // Exécutez la commande SCSS depuis PHP
-    shell_exec($command);
-
-    // Inclure le fichier CSS généré dans votre HTML
-    echo '<link rel="stylesheet" href="' . $cssFile . '">';
-
-    // Reste de votre code PHP
-    ?>
-
+    </main> 
 </body>
 
 </html>

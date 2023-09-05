@@ -23,10 +23,7 @@
     $nbPersonnesErreur = "";
     $genreErreur = "";
     $imageErreur = "";
-
-    //Autres variables pour gérer les erreurs
-    $regexLettres = "^[a-zA-z]+ ( [\s] [a-zA-Z]+)^$";
-
+    
     //La variable qui permet de savoir s'il y a au moins une erreur dans le formulaire
     $erreur = false;
 
@@ -54,8 +51,9 @@
         if (empty($_POST['nbPersonnes'])) {
             $nbPersonnesErreur = "Le nombre de personnes est requis";
             $erreur = true;
-        } elseif ($nbPersonnes <= 1 || preg_match('/' . $regexLettres . '/', $_POST['nbPersonnes'])) {
+        } elseif (!is_numeric($_POST['nbPersonnes']) || $_POST['nbPersonnes'] <= 1) {
             $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
+            $erreur = true;
         } else {
             $nbPersonnes = test_input($_POST['nbPersonnes']);
         }
@@ -72,7 +70,7 @@
         } else {
             $image = test_input($_POST['image']);
         }
-        if (!$erreur) {
+        if ($erreur != true) {
             $sql = "INSERT INTO groupe (nom,nb_personnes, genre, img)
         VALUES ('" . $_POST['nom'] . "', " . $_POST['nbPersonnes'] . ", '" . $_POST['genre'] . "', '" . $_POST['image'] . "')";
             if (mysqli_query($conn, $sql)) {

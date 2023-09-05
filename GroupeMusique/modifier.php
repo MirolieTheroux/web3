@@ -74,6 +74,7 @@
             $erreur = true;
         } elseif (!is_numeric($_POST['nbPersonnes']) || $_POST['nbPersonnes'] <= 1) {
             $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
+            $erreur = true;
         } else {
             $nbPersonnes = test_input($_POST["nbPersonnes"]);
         }
@@ -96,7 +97,7 @@
 
             if ($conn->query($sql) === TRUE) {
                 
-                header("Location: index.php?action=modifier");
+                header("Location: index.php?action=modifierF");
                 echo "Modification réussie";
             } else {
                 echo $id . $sql . "<br>" . $conn->error;
