@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Script pour Bootstrap 5 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous" defer></script>
-    <script src="js/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
         <?php
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $password = "root";
         $dbname = "groupe_de_musique";
         //Createconnection
         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -77,39 +77,98 @@
 
             <a class="btn btn-success" href="ajouter.php">Ajouter un groupe</a>
 
-            <!-- TOASTS -->
-            <!-- Contenu du toast groupe supprimé -->
-            <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
-                <div id="toast-S" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <p class="me-auto"> Confirmation</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        <p class="m-0">Le groupe a bien été supprimé</p>
-                    </div>
-                </div>
-            </article> <!-- Fin toast -->
-
-         
-
-            <!-- TOASTS -->
-            <!-- Contenu du toast groupe modifié -->
-            <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
-                <div id="toast-M" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <p class="me-auto"> Confirmation</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        <p class="m-0">Le groupe a bien été modifié</p>
-                    </div>
-                </div>
-            </article> <!-- Fin toast -->
         <?php
+
         } else {
             echo "0 results";
         }
+        ?>
+        <!-- TOASTS -->
+        <!-- Contenu du toast groupe ajouté -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-A" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été ajouté</p>
+                </div>
+            </div>
+        </article><!-- Fin toast -->
+
+        <!-- TOASTS -->
+        <!-- Contenu du toast groupe modifié -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-M" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été modifié</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- TOASTS -->
+        <!-- Contenu du toast groupe supprimé -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-S" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été supprimé</p>
+                </div>
+            </div>
+        </article><!-- Fin toast -->
+
+         <!-- TOASTS -->
+        <!-- Contenu du toast groupe ajouté -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-A" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été ajouté</p>
+                </div>
+            </div>
+        </article> <!-- Fin toast -->
+        <?php
+
+        //Appelle des fonctions toasts
+        if (!isset($_GET['action'])){
+
+        }
+        elseif ($_GET['action'] == "modifier") {
+        ?>
+            <script>
+                creerToastM()
+            </script>
+
+        <?php
+        } 
+        elseif($_GET['action'] == "ajouter"){
+            ?>
+            <script>
+                creerToastA()
+            </script>
+
+        <?php
+        }
+        elseif ($_GET['action'] == "supprimer") {
+        ?>
+            <script>
+                creerToastS()
+            </script>
+        <?php
+        }
+
+
         $conn->close();
         ?>
 

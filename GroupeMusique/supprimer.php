@@ -4,7 +4,7 @@
 //Variables connexion
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "groupe_de_musique";
 $id = $_GET['id'];
 //Create connection
@@ -17,7 +17,7 @@ if (!$conn) {
 $sql = "DELETE from groupe where id=$id";
 if ($conn->query($sql) === TRUE) {
     echo "Le groupe a été supprimé";
-    header("Location: index.php");
+    header("Location: index.php?action=supprimer");
 } else {
     echo "Erreur";
 }

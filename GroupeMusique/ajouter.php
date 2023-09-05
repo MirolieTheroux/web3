@@ -33,7 +33,7 @@
     //Variables connexion
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "root";
     $dbname = "groupe_de_musique";
     //Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -77,23 +77,7 @@
         VALUES ('" . $_POST['nom'] . "', " . $_POST['nbPersonnes'] . ", '" . $_POST['genre'] . "', '" . $_POST['image'] . "')";
             if (mysqli_query($conn, $sql)) {
                 echo "Enregistrement réussi";
-                header("Location: ajouter.php");
-    ?>
-                <!-- TOASTS -->
-                <!-- Contenu du toast groupe supprimé -->
-                <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
-                    <div id="toast-A" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <p class="me-auto"> Confirmation</p>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body">
-                            <p class="m-0">Le groupe a bien été ajouté</p>
-                        </div>
-                    </div>
-                </article> <!-- Fin toast -->
-                </div>
-        <?php
+                header("Location: index.php?action=ajouter");
             } else {
                 echo "Error:" . $sql . "<br>" . mysqli_error($conn);
             }
@@ -153,6 +137,7 @@
 
 
     ?>
+
 </body>
 
 </html>

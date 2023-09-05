@@ -1,39 +1,45 @@
 'use strict';
 /* global bootstrap */
 
-document.addEventListener('DOMContentLoaded', function () {
+
     /**
-     * 
+     * Créer un toast lors d'une modification
      */
-    function creerToastSupprimer() {
-        let toast = new bootstrap.Toast(document.getElementById('toast-S'));
-        toast.show();
+    function creerToastM() {
+        let optionsToast = {
+            delay: 3000,
+            animation: true,
+            autohide: true
+        };
+
+        new bootstrap.Toast(document.getElementById('toast-M'), optionsToast).show();
     }
+
     /**
-     * 
+     * Créer un toast lors d'un ajout
      */
-    function creerToastModifier() {
-        let toast = new bootstrap.Toast(document.getElementById('toast-M'));
-        toast.show();
-    }
-if()
- 
-});
-
-
-if (document.getElementById('ajouter')) {
-    document.getElementById('ajouter').addEventListener('submit', function (e) {
-        e.preventDefault();
-        /**
-         * 
-         */
-        function creerToastAjouter() {
-
-            let toast = new bootstrap.Toast(document.getElementById('toast-A'));
-            toast.show();
+        function creerToastA() {
+            let optionsToast = {
+                delay: 3000,
+                animation: true,
+                autohide: true
+            };
+    
+            new bootstrap.Toast(document.getElementById('toast-A'), optionsToast).show();
         }
 
-        creerToastAjouter();
-    });
+    /**
+     * Créer un toast lorsque supprimé
+     */
+    function creerToastS() {
+        let optionsToast = {
+            delay: 3000,
+            animation: true,
+            autohide: true
+        };
 
-}
+        new bootstrap.Toast(document.getElementById('toast-S'), optionsToast).show();
+    }
+
+
+
