@@ -1,4 +1,7 @@
-
+<?php
+//Démarre la session
+session_start();
+?>
 
 <?php
 //Variables connexion

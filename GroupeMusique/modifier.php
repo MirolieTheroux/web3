@@ -1,3 +1,7 @@
+<?php
+//Démarre la session
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,152 +16,155 @@
 <body class="container mt-5">
 
     <?php
-    //On crée les variables du formulaire vide
-    $nom = "";
-    $nbPersonnes = "";
-    $genre = "";
-    $image = "";
+    if (isset($_SESSION['connexion'])) {
+        //On crée les variables du formulaire vide
+        $nom = "";
+        $nbPersonnes = "";
+        $genre = "";
+        $image = "";
 
-    //On crée les variables d'erreurs vides
-    $nomErreur = "";
-    $nbPersonnesErreur = "";
-    $genreErreur = "";
-    $imageErreur = "";
+        //On crée les variables d'erreurs vides
+        $nomErreur = "";
+        $nbPersonnesErreur = "";
+        $genreErreur = "";
+        $imageErreur = "";
 
-    //La variable qui permet de savoir s'il y a au moins une erreur dans le formulaire
-    $erreur = false;
+        //La variable qui permet de savoir s'il y a au moins une erreur dans le formulaire
+        $erreur = false;
 
-    //Variables connexion
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "groupe_de_musique";
-    //Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    //Check connection
+        //Variables connexion
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
+        $dbname = "groupe_de_musique";
+        //Create connection
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+        //Check connection
 
-    if (!$conn) {
-        die("Connectionfailed:" . mysqli_connect_error());
-    }
-
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $sql = "SELECT * from groupe WHERE id=$id";
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
-        $nom =  $row['nom'];
-        $nbPersonnes = $row['nb_personnes'];
-        $genre = $row['genre'];
-        $image = $row['img'];
-    } elseif (isset($_POST['id'])) {
-        $id = $_POST['id'];
-        $sql = "SELECT * from groupe WHERE id=$id";
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
-        $nom = $row['nom'];
-        $nbPersonnes = $row['nb_personnes'];
-        $genre = $row['genre'];
-        $image = $row['img'];
-    } else {
-        echo "ERREUR";
-    }
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($_POST['nom'])) {
-            $nomErreur = "Le nom est requis";
-            $erreur = true;
-        } else {
-            $nom = test_input($_POST["nom"]);
-        }
-        if (empty($_POST['nbPersonnes'])) {
-            $nbPersonnesErreur = "Le nombre de personnes est requis";
-            $erreur = true;
-        } elseif (!is_numeric($_POST['nbPersonnes']) || $_POST['nbPersonnes'] <= 1) {
-            $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
-            $erreur = true;
-        } else {
-            $nbPersonnes = test_input($_POST["nbPersonnes"]);
+        if (!$conn) {
+            die("Connectionfailed:" . mysqli_connect_error());
         }
 
-        if (empty($_POST['genre'])) {
-            $genreErreur = "Le genre est requis";
-            $erreur = true;
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $sql = "SELECT * from groupe WHERE id=$id";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $nom =  $row['nom'];
+            $nbPersonnes = $row['nb_personnes'];
+            $genre = $row['genre'];
+            $image = $row['img'];
+        } elseif (isset($_POST['id'])) {
+            $id = $_POST['id'];
+            $sql = "SELECT * from groupe WHERE id=$id";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $nom = $row['nom'];
+            $nbPersonnes = $row['nb_personnes'];
+            $genre = $row['genre'];
+            $image = $row['img'];
         } else {
-            $genre = test_input($_POST["genre"]);
-        }
-        if (empty($_POST['image'])) {
-            $imageErreur = "Le lien pour un avatar est requis";
-            $erreur = true;
-        } else {
-            $image = test_input($_POST["image"]);
+            echo "ERREUR";
         }
 
-        if (!$erreur) {
-            $sql = "UPDATE groupe SET nom='$nom', nb_personnes='$nbPersonnes', genre='$genre', img='$image' WHERE id=$id";
-
-            if ($conn->query($sql) === TRUE) {
-                
-                header("Location: index.php?action=modifierF");
-                echo "Modification réussie";
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($_POST['nom'])) {
+                $nomErreur = "Le nom est requis";
+                $erreur = true;
             } else {
-                echo $id . $sql . "<br>" . $conn->error;
+                $nom = test_input($_POST["nom"]);
             }
+            if (empty($_POST['nbPersonnes'])) {
+                $nbPersonnesErreur = "Le nombre de personnes est requis";
+                $erreur = true;
+            } elseif (!is_numeric($_POST['nbPersonnes']) || $_POST['nbPersonnes'] <= 1) {
+                $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
+                $erreur = true;
+            } else {
+                $nbPersonnes = test_input($_POST["nbPersonnes"]);
+            }
+
+            if (empty($_POST['genre'])) {
+                $genreErreur = "Le genre est requis";
+                $erreur = true;
+            } else {
+                $genre = test_input($_POST["genre"]);
+            }
+            if (empty($_POST['image'])) {
+                $imageErreur = "Le lien pour un avatar est requis";
+                $erreur = true;
+            } else {
+                $image = test_input($_POST["image"]);
+            }
+
+            if (!$erreur) {
+                $sql = "UPDATE groupe SET nom='$nom', nb_personnes='$nbPersonnes', genre='$genre', img='$image' WHERE id=$id";
+
+                if ($conn->query($sql) === TRUE) {
+
+                    header("Location: index.php?action=modifier");
+                    echo "Modification réussie";
+                } else {
+                    echo $id . $sql . "<br>" . $conn->error;
+                }
+            }
+            mysqli_close($conn);
         }
-        mysqli_close($conn);
-    }
 
 
 
-    if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
+        if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
 
     ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <input type="hidden" name="id" value="<?php echo $id; ?>">
-            <div>
-                <label for="">Nom du groupe :</label>
-                <input type="text" class="form-control" name="nom" value="<?php echo $nom; ?>">
-                <span class="text-danger"><?php echo $nomErreur; ?></span>
-            </div>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                <div>
+                    <label for="">Nom du groupe :</label>
+                    <input type="text" class="form-control" name="nom" value="<?php echo $nom; ?>">
+                    <span class="text-danger"><?php echo $nomErreur; ?></span>
+                </div>
 
-            <div>
-                <label for="">Nombre de personnes :</label>
-                <input type="text" name="nbPersonnes" class="form-control" value="<?php echo $nbPersonnes; ?>">
-                <span class="text-danger"><?php echo $nbPersonnesErreur; ?></span>
-            </div>
+                <div>
+                    <label for="">Nombre de personnes :</label>
+                    <input type="text" name="nbPersonnes" class="form-control" value="<?php echo $nbPersonnes; ?>">
+                    <span class="text-danger"><?php echo $nbPersonnesErreur; ?></span>
+                </div>
 
-            <div>
-                <label for="">Genre : </label>
-                <input type="text" class="form-control" name="genre" value="<?php echo $genre; ?>">
-                <span class="text-danger"><?php echo $genreErreur; ?></span>
+                <div>
+                    <label for="">Genre : </label>
+                    <input type="text" class="form-control" name="genre" value="<?php echo $genre; ?>">
+                    <span class="text-danger"><?php echo $genreErreur; ?></span>
 
-            </div>
+                </div>
 
-            <div>
+                <div>
 
-                <label for="">Image:</label>
-                <input type="text" class="form-control" name="image" value="<?php echo $image; ?>">
-                <span class="text-danger"><?php echo $imageErreur; ?></span>
-            </div>
+                    <label for="">Image:</label>
+                    <input type="text" class="form-control" name="image" value="<?php echo $image; ?>">
+                    <span class="text-danger"><?php echo $imageErreur; ?></span>
+                </div>
 
 
+                <div class="col-6 mt-5">
+                    <input class="btn btn-primary" type="submit" value="Modifier">
+                </div>
+
+
+            </form>
             <div class="col-6 mt-5">
-                <input class="btn btn-primary" type="submit" value="Modifier">
+                <a class="btn btn-success" href="index.php">Retour</a>
             </div>
-
-
-        </form>
-        <div class="col-6 mt-5">
-            <a class="btn btn-success" href="index.php">Retour</a>
-        </div>
     <?php
-    }
-    function test_input($data)
-    {
-        $data = trim($data);
-        $data = addslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+        }
+        function test_input($data)
+        {
+            $data = trim($data);
+            $data = addslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
+    } else
+        header("Location: connexion.php");
     ?>
 </body>
 
