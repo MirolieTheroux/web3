@@ -23,10 +23,7 @@
     $nbPersonnesErreur = "";
     $genreErreur = "";
     $imageErreur = "";
-
-    //Autres variables pour gérer les erreurs
-    $regexLettres = "^[a-zA-z]+ ( [\s] [a-zA-Z]+)^$";
-
+    
     //La variable qui permet de savoir s'il y a au moins une erreur dans le formulaire
     $erreur = false;
 
@@ -48,43 +45,48 @@
             $nomErreur = "Le nom est requis";
             $erreur = true;
         } else {
-            $nom = test_input($_POST["nom"]);
+            $nom = test_input($_POST['nom']);
         }
+
         if (empty($_POST['nbPersonnes'])) {
             $nbPersonnesErreur = "Le nombre de personnes est requis";
             $erreur = true;
-        } elseif ($nbPersonnes <= 1 || preg_match('/' . $regexLettres . '/', $_POST['nbPersonnes'])) {
+        } elseif (!is_numeric($_POST['nbPersonnes']) || $_POST['nbPersonnes'] <= 1) {
             $nbPersonnesErreur = "Veuillez inscrire un nombre de personnes supérieur à 1";
+            $erreur = true;
         } else {
-            $nbPersonnes = test_input($_POST["nbPersonnes"]);
+            $nbPersonnes = test_input($_POST['nbPersonnes']);
         }
 
         if (empty($_POST['genre'])) {
             $genreErreur = "Le genre est requis";
             $erreur = true;
         } else {
-            $genre = test_input($_POST["genre"]);
+            $genre = test_input($_POST['genre']);
         }
         if (empty($_POST['image'])) {
             $imageErreur = "Le lien pour un avatar est requis";
             $erreur = true;
         } else {
-            $image = test_input($_POST["image"]);
+            $image = test_input($_POST['image']);
         }
-        $sql = "INSERT INTO groupe (nom,nb_personnes, genre, img)
+        if ($erreur != true) {
+            $sql = "INSERT INTO groupe (nom,nb_personnes, genre, img)
         VALUES ('" . $_POST['nom'] . "', " . $_POST['nbPersonnes'] . ", '" . $_POST['genre'] . "', '" . $_POST['image'] . "')";
-        if (mysqli_query($conn, $sql)) {
-            echo "Enregistrement réussi";
-        } else {
-            echo "Error:" . $sql . "<br>" . mysqli_error($conn);
+            if (mysqli_query($conn, $sql)) {
+                echo "Enregistrement réussi";
+                header("Location: index.php?action=ajouter");
+            } else {
+                echo "Error:" . $sql . "<br>" . mysqli_error($conn);
+            }
         }
         mysqli_close($conn);
     }
-    
+
 
 
     if ($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {
-    ?>
+        ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div>
                 <label for="">Nom du groupe :</label>
@@ -94,7 +96,7 @@
 
             <div>
                 <label for="">Nombre de personnes :</label>
-                <input type="text" name="nbPersonnes" class="form-control" value="<?php echo $nbPersonnes; ?>">
+                <input type="number" name="nbPersonnes" class="form-control" value="<?php echo $nbPersonnes; ?>">
                 <span class="text-danger"><?php echo $nbPersonnesErreur; ?></span>
             </div>
 
@@ -114,12 +116,13 @@
 
 
             <div class="col-6 mt-5">
-                <input class="btn btn-primary" type="submit" value="Ajouter le groupe">
+                <input id="ajouter" class="btn btn-primary" type="submit" value="Ajouter le groupe">
             </div>
         </form>
         <div class="col-6 mt-5">
             <a class="btn btn-success" href="index.php">Retour</a>
         </div>
+
     <?php
     }
     function test_input($data)
@@ -132,6 +135,7 @@
 
 
     ?>
+
 </body>
 
 </html>

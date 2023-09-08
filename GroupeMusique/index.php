@@ -6,7 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Script pour Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </head>
 
 <body>
@@ -59,7 +64,7 @@
                             <td><?php echo $row['genre'] ?></td>
                             <td><img src="<?php echo $row['img'] ?>" alt="image du groupe" class="w-25 rounded"></td>
                             <td><a class="btn btn-primary" href="modifier.php?id=<?php echo $row['id'] ?>">Modifier</a></td>
-                            <td><a class="btn btn-danger" href="supprimer.php?id=<?php echo $row['id'] ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                            <td><a id="tSupprimer" class="btn btn-danger" href="supprimer.php?id=<?php echo $row['id'] ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                     </svg></a></td>
 
@@ -74,12 +79,100 @@
             <a class="btn btn-success" href="ajouter.php">Ajouter un groupe</a>
 
         <?php
+
         } else {
             echo "0 results";
         }
+        ?>
+        <!-- TOASTS -->
+        <!-- Contenu du toast groupe ajouté -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-A" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été ajouté</p>
+                </div>
+            </div>
+        </article><!-- Fin toast -->
+
+        <!-- TOASTS -->
+        <!-- Contenu du toast groupe modifié -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-M" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été modifié</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- TOASTS -->
+        <!-- Contenu du toast groupe supprimé -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-S" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été supprimé</p>
+                </div>
+            </div>
+        </article><!-- Fin toast -->
+
+         <!-- TOASTS -->
+        <!-- Contenu du toast groupe ajouté -->
+        <article class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 10">
+            <div id="toast-A" class="toast bg-primary text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <p class="me-auto"> Confirmation</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <p class="m-0">Le groupe a bien été ajouté</p>
+                </div>
+            </div>
+        </article> <!-- Fin toast -->
+        <?php
+
+        //Appelle des fonctions toasts
+        if (!isset($_GET['action'])){
+
+        }
+        elseif ($_GET['action'] == "modifier") {
+        ?>
+            <script>
+                creerToastM()
+            </script>
+
+        <?php
+        } 
+        elseif($_GET['action'] == "ajouter"){
+            ?>
+            <script>
+                creerToastA()
+            </script>
+
+        <?php
+        }
+        elseif ($_GET['action'] == "supprimer") {
+        ?>
+            <script>
+                creerToastS()
+            </script>
+        <?php
+        }
+
+
         $conn->close();
         ?>
-    </main>
+    </main> 
 </body>
 
 </html>

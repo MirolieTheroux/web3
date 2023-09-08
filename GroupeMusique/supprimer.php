@@ -17,10 +17,11 @@ if (!$conn) {
 $sql = "DELETE from groupe where id=$id";
 if ($conn->query($sql) === TRUE) {
     echo "Le groupe a été supprimé";
+    header("Location: index.php?action=supprimer");
 } else {
     echo "Erreur";
 }
-header("http://localhost/web3/GroupeMusique/index.php");
+
 $conn->close();
 
 ?>
