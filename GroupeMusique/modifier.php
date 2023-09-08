@@ -93,14 +93,14 @@
         } else {
             $image = test_input($_POST["image"]);
         }
-        $sql = "UPDATE groupe set nom='$nom' WHERE id=$id";
-        echo $sql;
+        // $sql = "UPDATE groupe set nom='$nom' WHERE id=$id";
+        // echo $sql;
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Modification réussie";
-        } else {
-            echo "Error:" . $sql . "<br>" . $conn->error;
-        }
+        // if ($conn->query($sql) === TRUE) {
+        //     echo "Modification réussie";
+        // } else {
+        //     echo "Error:" . $sql . "<br>" . $conn->error;
+        // }
     }
     mysqli_close($conn);
 
